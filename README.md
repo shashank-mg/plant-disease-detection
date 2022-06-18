@@ -8,5 +8,6 @@ Step 1: Change the path for deep learning model in the main.py file,
 Step 2: Run the local Server using FASTAPI uvicorn command,
 Step 3: Open the .html file in the browser.
 
+Use the sample images for diseases prediction.
 
 Note: Make sure all images are of size 256*256
