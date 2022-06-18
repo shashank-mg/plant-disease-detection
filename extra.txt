@@ -1,0 +1,26 @@
+
+<!-- // // https://us-central1-plant-disease-detection-349104.cloudfunctions.net/predict
+// fetch('http://us-central1-plant-disease-detection-349104.cloudfunctions.net/predict1', {
+//   headers: {Accept: 'application/json'},
+//   method: 'POST',
+//   body: formData,
+//   mode: 'no-cors',
+//   headers: {
+//     'Access-Control-Allow-Origin':'*',
+//     'Access-Control-Allow-Methods':'*'
+//   }
+// })
+// .then((res)=>{
+//     if(res.status !==200){
+//         console.log("Problem", res.status)
+//         return
+//     }
+//     res.json().then((data)=>{console.log(data)
+//     })
+// })
+// .catch(function(err){
+//     console.log('Fetch Error', err)
+// }) -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js"></script>         -->
+<!-- // url: 'http://us-central1-plant-disease-detection-349104.cloudfunctions.net/predict1', -->
+// url: 'https://us-central1-plant-disease-detection-349104.cloudfunctions.net/predict',

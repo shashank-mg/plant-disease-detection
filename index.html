@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Plant Disease Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" href="./images/icon1.jpg">
+</head>
+
+<body>
+    <div>
+        <h3> Plant Disease Detection </h3>
+    </div>
+    <div id="file-button">
+        <input type="file" name="file" id="plant_leaf_image" accept="image/*">
+        <input type='button' id='submit-button' class='btn btn-primary' value='submit' onclick='uploadFile()'>
+    </div>
+
+    <div id="display_image"> </div>
+
+    <div id="display_result">
+        <p id="disease_type"></p>
+        <p id="confidence"></p>
+    </div>
+
+    <script type="text/javascript">
+        let filebutton = document.querySelector("#file-button");
+        let submitButton = document.getElementById("submit-button");
+        let submitbutton1 = document.createElement('span')
+        let submitbutton2 = document.createElement('span')
+        var disp_res = document.getElementById('disease_type')
+        var conf = document.getElementById('confidence')
+        function uploadFile() {
+            let results = 0;
+            var formData = new FormData();
+            var plant_leaf_image = document.getElementById('plant_leaf_image');
+            disp_res.innerText = ''
+            conf.innerText = ''
+
+            if (plant_leaf_image.files[0]) {
+                results = 1
+                if (results) {
+                    filebutton.removeChild(submitButton)
+                    submitbutton1.innerHTML =
+                        "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'></span></div>"
+                    filebutton.append(submitbutton1)
+                }
+                formData.append("classified_id", 2);
+                formData.append("file", plant_leaf_image.files[0]);
+                axios({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'multipart/form-data',
+                        'Access-Control-Allow-Origin': '*',
+                        'Access-Control-Allow-Methods': 'POST',
+                        'Access-Control-Allow-Headers': "Origin, Content-Type, X-Auth-Token, Authorization, Accept, charset, boundary, Content-Length"
+                    },
+                    method: 'post',
+                    url: 'http://localhost:8000/predict',
+                    data: formData,
+                    withCredentials: true,
+                })
+                    .then(function (response) {
+                        setTimeout(() => {
+                            if (typeof response.data[0] === "number") {
+                                disp_res.innerText = `Prediction: ${response.data[1]}`
+                                conf.innerText = `Confidence: ${response.data[0]}`
+                            } else {
+                                disp_res.innerText = `Prediction: ${response.data[0]}`
+                                conf.innerText = `Confidence: ${response.data[1]}`
+                            }
+                            results = 0
+                            if (!results) {
+                                filebutton.removeChild(submitbutton1)
+                                submitButton.innerHTML =
+                                    "<input type='button' id='submit-button' class='btn btn-primary' value='submit' onclick='uploadFile()'>"
+                                filebutton.append(submitButton)
+                            }
+                        }, 1000)
+                    })
+                    .catch(function (response) {
+                        console.error(response);
+                    });
+            }
+        }
+    </script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
