@@ -11,3 +11,4 @@ Step 3: Open the .html file in the browser.
 Use the sample images for diseases prediction.
 
 Note: Make sure all images are of size 256*256
+      Change the name of original_googlenetmodel.py to main.py before running the script
